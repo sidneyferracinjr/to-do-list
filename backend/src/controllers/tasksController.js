@@ -1,33 +1,32 @@
 const tasksModel = require('../models/tasksModel');
 
-const getAll = async (req, res) => {
-    const tasks = await tasksModel.getAll();
-    return res.status(200).json(tasks);
-}
-
-const createTask = async (req, res) => {
-    const createdTask = await tasksModel.createTask(req.body);
-    return res.status(201).json(createdTask);
+const getAll = async (_request, response) => {
+  const tasks = await tasksModel.getAll();
+  return response.status(200).json(tasks);
 };
 
-const deleteTask = async (req, res) => {
-    const { id } = req.params;
+const createTask = async (request, response) => {
+  const createdTask = await tasksModel.createTask(request.body);
+  return response.status(201).json(createdTask);
+};
 
-    await tasksModel.deleteTask(id);
-    return res.status(204).json();
-}
+const deleteTask = async (request, response) => {
+  const { id } = request.params;
 
-const updateTask = async (req, res) => {
-    const { id } = req.params;
-    const task = req.body;
+  await tasksModel.deleteTask(id);
+  return response.status(204).json();
+};
 
-    const updatedTask = await tasksModel.updateTask(id, task);
-    return res.status(200).json(updatedTask);
-}
+const updateTask = async (request, response) => {
+  const { id } = request.params;
+
+  await tasksModel.updateTask(id, request.body);
+  return response.status(204).json();
+};
 
 module.exports = {
-    getAll,
-    createTask,
-    deleteTask,
-    updateTask,
-}
+  getAll,
+  createTask,
+  deleteTask,
+  updateTask,
+};
